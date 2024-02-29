@@ -1,5 +1,5 @@
 # ShaderPerFormer
-This is the repository of codes in out [ACM SIGGRAPH i3D'2024]([https://i3dsymposium.org/](https://i3dsymposium.org/2024/) paper "ShaderPerFormer: Platform-independent Context-aware Shader Performance Predictor".
+This is the repository of codes in out [ACM SIGGRAPH i3D'2024](https://i3dsymposium.org/2024/) paper "ShaderPerFormer: Platform-independent Context-aware Shader Performance Predictor".
 
 ## Codes
 
