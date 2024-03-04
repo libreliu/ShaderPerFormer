@@ -83,3 +83,5 @@ DEBUG=1 CMAKE_BUILD_PARALLEL_LEVEL=12 pip install --verbose .
 `cibuildwheel --platform linux` may also used and is tested to be working.
 
 This produces a `.whl` capable of running in Python 3.8 on x86-64 Linux with `glibc>=2.28`.
+
+> Using `python setup.py bdist_wheel` can also generate a `.whl` file, but you'll need to manually resolve ABI issues. Using `cibuildwheel` can automate this.
