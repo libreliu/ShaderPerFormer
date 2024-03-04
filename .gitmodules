@@ -1,0 +1,15 @@
+[submodule "code/vkExecute/thirdParty/SPIRV-Tools"]
+	path = code/vkExecute/thirdParty/SPIRV-Tools
+	url = https://github.com/libreliu/SPIRV-Tools.git
+[submodule "code/vkExecute/thirdParty/SPIRV-Headers"]
+	path = code/vkExecute/thirdParty/SPIRV-Headers
+	url = https://github.com/KhronosGroup/SPIRV-Headers.git
+[submodule "code/vkExecute/thirdParty/Auto-Vk-Toolkit"]
+	path = code/vkExecute/thirdParty/Auto-Vk-Toolkit
+	url = https://github.com/libreliu/Auto-Vk-Toolkit.git
+[submodule "code/vkExecute/thirdParty/Catch2"]
+	path = code/vkExecute/thirdParty/Catch2
+	url = https://github.com/catchorg/Catch2.git
+[submodule "code/vkExecute/pybind11"]
+	path = code/vkExecute/pybind11
+	url = https://github.com/pybind/pybind11.git
