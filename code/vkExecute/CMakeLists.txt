@@ -21,7 +21,7 @@ FetchContent_MakeAvailable(glslang)
 option(VKEXECUTE_USE_EXTERNAL_SPIRV_TOOLS "Use external SPIRV-Tools and SPIRV-Headers" OFF)
 
 # Force enable fuzzer build
-set(SPIRV_BUILD_FUZZER ON)
+set(SPIRV_BUILD_FUZZER OFF)
 set(SPIRV_BUILD_TESTS OFF)
 set(SKIP_SPIRV_TOOLS_INSTALL OFF)
 

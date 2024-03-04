@@ -10,12 +10,16 @@ from setuptools.command.build_ext import build_ext
 from subprocess import Popen, PIPE
 
 def call_git_describe(abbrev):
-    p = Popen(['git', 'describe', f'--abbrev={abbrev}'],
-                  stdout=PIPE, stderr=PIPE)
-    p.stderr.close()
-    line = p.stdout.readlines()[0].strip()
+    try:
+        p = Popen(['git', 'describe', f'--abbrev={abbrev}'],
+                    stdout=PIPE, stderr=PIPE)
+        p.stderr.close()
+        line = p.stdout.readlines()[0].strip()
 
-    return line.decode('utf8')
+        return line.decode('utf8')
+    except:
+        print(f"Error while retrieving version; use v0.0.0 instead")
+        return 'v0.0.0'
 
 
 def is_dirty():
