@@ -17,6 +17,8 @@ Shadertoy website will have shader ids that **only differ by name**. This can ca
 
 To overcome this, new path scheme is introduced. In the path `N` = Numeric, `L` = Lowercase and `U` = Uppercase.
 
+> NOTE: Use `fsutil file setCaseSensitiveInfo <path> enable` to enable the case sensitivity of shader directory under Windows, although this is no longer needed.
+
 ## Usage
 
 1. clone to `toyDb` folder
