@@ -19,6 +19,29 @@ To overcome this, new path scheme is introduced. In the path `N` = Numeric, `L` 
 
 > NOTE: Use `fsutil file setCaseSensitiveInfo <path> enable` to enable the case sensitivity of shader directory under Windows, although this is no longer needed.
 
+## Lock frequency
+
+### NVIDIA
+
+NVIDIA [Ref](https://developer.nvidia.com/blog/advanced-api-performance-setstablepowerstate/):
+- Query supported: `nvidia-smi --query-supported-clocks=timestamp,gpu_name,gpu_uuid,memory,graphics --format=csv`
+- Enter persistence mode:
+  - `sudo nvidia-smi -pm 1`
+- Set:
+  - Core CLK: `sudo nvidia-smi --lock-gpu-clocks=<core_clock_rate>`
+  - Memory CLK: `sudo nvidia-smi --lock-memory-clocks=<memory_clock_rate>`
+- Reset:
+  - `sudo nvidia-smi --reset-gpu-clocks`
+  - `sudo nvidia-smi --reset-memory-clocks`
+
+> Not all NVIDIA graphics cards support locking the frequency.
+
+### AMD
+
+https://wiki.archlinux.org/title/AMDGPU
+
+https://github.com/sibradzic/amdgpu-clocks
+
 ## Usage
 
 1. clone to `toyDb` folder

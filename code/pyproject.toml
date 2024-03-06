@@ -1,0 +1,10 @@
+# This is a dummy toml that are only intended to be used with `pip install --editable .`
+# Other methods are untested and will likely to cause problems
+
+[project]
+name = "ShaderPerFormer"
+version = "0.0.1"
+dependencies = []
+
+[tool.setuptools]
+packages = ["toyDb", "vkPredict"]
