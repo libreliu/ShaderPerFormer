@@ -1,0 +1,28 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "ninja",
+    "cmake>=3.12",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+# Only build on CPython 3.8
+build = "cp38-manylinux_x86_64"
+
+[tool.cibuildwheel.linux]
+# Run multiple commands using an array
+before-all = [
+  "yum install gcc gcc-c++ make -y",
+  "yum install vulkan vulkan-devel -y",
+  "yum install libXi libXi-devel libXinerama libXinerama-devel libXcursor libXcursor-devel libXrandr libXrandr-devel -y",
+  "yum install git -y"
+]
+
+# See https://github.com/pypa/manylinux
+# manylinux2014 is CentOS 7 based, with GCC 10
+# Ubuntu 20.04 ships with gcc 9 + glibc 2.31, so no C++20 => can't build Auto-Vk
+# and glibc 2.28 is safe
+
+manylinux-x86_64-image = "manylinux_2_28"
