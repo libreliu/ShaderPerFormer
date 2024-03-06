@@ -4,7 +4,7 @@ import tqdm
 import sys
 import vkExecute
 
-from databases.ShaderDb import ShaderDB, ShaderProxy
+from databases.ShaderDb import ShaderDB, ShaderProxy, SHADER_DIR
 from databases.ExperimentDb import (
   getCanonicalImageOnlyExperiments,
   getSuccessfulImageOnlyExperiments,

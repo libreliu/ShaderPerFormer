@@ -1,0 +1,10 @@
+# shader
+*.json
+
+# database
+*.db
+
+# media
+*.jpg
+*.png
+*.mp3

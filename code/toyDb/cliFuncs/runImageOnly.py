@@ -2,7 +2,7 @@ import os, logging, sys
 import datetime
 import json
 
-from databases.ShaderDb import ShaderDB, ShaderProxy
+from databases.ShaderDb import ShaderDB, ShaderProxy, SHADER_DIR
 import databases.ExperimentDb as ExperimentDb
 import utils.SubprocessManager
 from experiments.ImageOnlyRunner import (
@@ -49,8 +49,7 @@ def testOneShader(
 
 def cliRun(db, args):
   runnable_shaders = []
-  shaderDB = ShaderDB(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "../shaders"))
+  shaderDB = ShaderDB(SHADER_DIR)
   shaderDB.scan_local()
 
   if args.shader_id != "":

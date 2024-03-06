@@ -6,6 +6,10 @@ import functools
 
 logger = logging.getLogger(__name__)
 
+SHADER_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "../../../dataset/shaders"
+)
+
 def cachable_attribute(func):
     """Will handle load & cache automatically"""
     
@@ -143,7 +147,7 @@ class ShaderProxy:
         fileName = mediaURL[9:]
         stat = None
         try:
-            stat = os.stat(f"shaders/media/a/{fileName}")
+            stat = os.stat(f"{self.shaderDir}/media/a/{fileName}")
         except FileNotFoundError:
             pass
 
@@ -274,21 +278,71 @@ class ShaderDB:
         for shaderID, ShaderProxy in self.offlineShaders.items():
             ShaderProxy.unload()
 
-    def scan_local(self):
+    @staticmethod
+    def convert_from_mangled_format(mangledName: str):
+        if len(mangledName) != 13 or '-' not in mangledName or mangledName[6] != '-':
+            raise Exception(
+                "Mangled format expects things like 3dXttZ-NLULLU (N: Numeric, L: Lower case, U: Upper case)"
+            )
+
+        unfixedId = mangledName[:6]
+        fixedId = ""
+        for idx, fixMethod in enumerate(mangledName[7:]):
+            if fixMethod == 'N':
+                if not ('0' <= unfixedId[idx] <= '9'):
+                    raise Exception(f"Expect numeric on pos {idx}")
+                else:
+                    fixedId += unfixedId[idx]
+            elif fixMethod == 'L' or fixMethod == 'U':
+                if not ('A' <= unfixedId[idx] <= 'Z' or 'a' <= unfixedId[idx] <= 'z'):
+                    raise Exception(f"Unknown character appeared on pos {idx}: {unfixedId[idx]}")
+                
+                if fixMethod == 'L':
+                    fixedId += unfixedId[idx].lower()
+                else:
+                    fixedId += unfixedId[idx].upper()
+        
+        assert(len(fixedId) == 6)
+        return fixedId
+
+    @staticmethod
+    def convert_to_mangled_format(unmangledName: str):
+        assert(len(unmangledName) == 6)
+        suffix = ""
+        for idx, ch in enumerate(unmangledName):
+            if 'A' <= ch <= 'Z':
+                suffix += 'U'
+            elif 'a' <= ch <= 'z':
+                suffix += 'L'
+            elif '0' <= ch <= '9':
+                suffix += 'N'
+            else:
+                raise Exception(f"Unexpected character {ch} on pos {idx}")
+
+        assert(len(suffix) == 6)
+        return f"{unmangledName}-{suffix}"
+
+    def scan_local(self, mangledName=True):
+        """Name mangling: 3dXttZ => 3N/dU/XU/3dXttZ-NLULLU.json"""
         for root, dirs, files in os.walk(self.shaderDir):
             for fileName in files:
                 if fileName.endswith('.json') and fileName != self.attrCacheName:
-                    shaderID = fileName[:fileName.index('.')]
+                    if mangledName:
+                        shaderID = ShaderDB.convert_from_mangled_format(fileName[:fileName.index('.')])
+                    else:
+                        shaderID = fileName[:fileName.index('.')]
+
                     assert(len(shaderID) == 6 and shaderID not in self.offlineShaders)
                     self.offlineShaders[shaderID] = ShaderProxy(
                         self,
                         shaderID,
                         os.path.realpath(os.path.join(root, fileName))
                     )
-        
+
         logger.info(f"Loaded {len(self.offlineShaders)} offline shaders.")
 
-    def create_path_dirs_if_nonexist(self, path):
+    @staticmethod
+    def create_path_dirs_if_nonexist(path):
         dirpath = os.path.dirname(path)
         try:
             os.makedirs(dirpath)

@@ -17,9 +17,12 @@ CANONICAL_HEIGHT = 768
 
 
 db = pw.SqliteDatabase(None)
+DEFAULT_DB_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "../../../dataset/experiments.db"
+)
 
 def init_from_default_db():
-    db.init(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../experiments.db"), pragmas={'foreign_keys': 1})
+    db.init(DEFAULT_DB_PATH, pragmas={'foreign_keys': 1})
 
 def init_from_in_memory_db():
     """This is useful for debugging"""

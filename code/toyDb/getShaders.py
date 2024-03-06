@@ -3,6 +3,8 @@ import argparse
 
 # https://www.shadertoy.com/howto
 
+from databases.ShaderDb import SHADER_DIR, ShaderDB
+
 def sanitize_name(name: str):
     out = ""
     for ch in name:
@@ -13,6 +15,11 @@ def sanitize_name(name: str):
         else:
             pass
     return out
+
+def construct_path(shaderID: str):
+    mangled_name = ShaderDB.convert_to_mangled_format(shaderID)
+    path = f"{SHADER_DIR}/json/{mangled_name[0]}-{mangled_name[7]}/{mangled_name[1]}-{mangled_name[8]}/{mangled_name}.json"
+    return path
 
 def get_shader_online(shaderID, apiKey):
     r = requests.get(
@@ -25,7 +32,11 @@ def get_shader_online(shaderID, apiKey):
 
     print(f'Shader {shaderID}: name={res["Shader"]["info"]["name"]}, author={res["Shader"]["info"]["username"]}')
 
-    with open(f'shaders/json/{shaderID}-{sanitize_name(res["Shader"]["info"]["name"])}.json', 'w') as f:
+    targetPath = construct_path(shaderID)
+    print(f'=> Target path: {targetPath}')
+    ShaderDB.create_path_dirs_if_nonexist(targetPath)
+
+    with open(targetPath, 'w') as f:
         json.dump(res, f)
 
 def download_media(mediaURL: str, replace=False, chunkSize=8192):
@@ -35,7 +46,7 @@ def download_media(mediaURL: str, replace=False, chunkSize=8192):
     fileName = mediaURL[9:]
     stat = None
     try:
-        stat = os.stat(f"shaders/media/a/{fileName}")
+        stat = os.stat(f"{SHADER_DIR}/media/a/{fileName}")
     except FileNotFoundError:
         pass
 
@@ -51,7 +62,7 @@ def download_media(mediaURL: str, replace=False, chunkSize=8192):
         }
     )
 
-    with open(f"shaders/media/a/{fileName}", 'wb') as fd:
+    with open(f"{SHADER_DIR}/media/a/{fileName}", 'wb') as fd:
         for chunk in r.iter_content(8192):
             fd.write(chunk)
 
@@ -70,7 +81,7 @@ def enumerate_shaders(apiKey):
     return shaderIDs
 
 def enumerate_shaders_offline(fullName = False):
-    shaderDirFiles = os.listdir('shaders/json')
+    shaderDirFiles = os.listdir(f'{SHADER_DIR}/json')
     shaderIDs = []
     for fileName in shaderDirFiles:
         if fileName.endswith(".json") and len(fileName) >= 11:
@@ -79,8 +90,23 @@ def enumerate_shaders_offline(fullName = False):
     
     return shaderIDs
 
+def enumerate_shaders_offline(mangledName=True):
+    shaderIDs = []
+    for root, dirs, files in os.walk(f"{SHADER_DIR}/json"):
+        for fileName in files:
+            if fileName.endswith('.json') and fileName != 'attributes.json':
+                if mangledName:
+                    shaderID = ShaderDB.convert_from_mangled_format(fileName[:fileName.index('.')])
+                else:
+                    shaderID = fileName[:fileName.index('.')]
+
+                assert(len(shaderID) == 6)
+                shaderIDs.append((shaderID, os.path.realpath(os.path.join(root, fileName))))
+    
+    return shaderIDs
+
 def read_shader(shaderFilename):
-    with open(f'shaders/json/{shaderFilename}') as f:
+    with open(shaderFilename) as f:
         return json.load(f)
 
 def amend_shader(apiKey):
@@ -95,6 +121,8 @@ def amend_shader(apiKey):
         print(f"Processing {shaderID}...")
         try:
             get_shader_online(shaderID, apiKey)
+        except KeyboardInterrupt as e:
+            raise e
         except:
             print(f"Failed to get shader {shaderID}, ignore")
 
@@ -155,7 +183,7 @@ if __name__ == "__main__":
     apiKey = None
 
     parser = argparse.ArgumentParser(prog = 'ShaderDB')
-    parser.add_argument('--apiKeyFile', default="apikey.txt")
+    parser.add_argument('--apiKeyFile', default="apiKey.txt")
     parser.add_argument('--amend', action='store_true', help="Update online before querying")
     parser.add_argument('verb', choices=["noop", "imageonly-shaders", "check-channel-type"], default="noop")
     args = parser.parse_args()

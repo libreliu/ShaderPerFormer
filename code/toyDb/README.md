@@ -7,9 +7,15 @@ Usage:
   - Approximately 20000+ shaders
 
 todo:
-- [ ] sancheck
+- [ ] shader sanity check
 - [ ] replay
   - [ ] conformance test with reference implementation
+
+## Special reminder
+
+Shadertoy website will have shader ids that **only differ by name**. This can cause trouble for case-insensitive file systems (e.g. NTFS folders configured as case-insensitive). Currently, use Linux when testing, or configure Windows to be case sensitive in the folder under test (and be aware of any weird behaviors of Windows utility programs).
+
+To overcome this, new path scheme is introduced. In the path `N` = Numeric, `L` = Lowercase and `U` = Uppercase.
 
 ## Usage
 
@@ -89,7 +95,7 @@ float     iSampleRate            image/buffer/sound The sound sample rate (typic
 - Cubemap
   - `void mainCubemap( out vec4 fragColor, in vec2 fragCoord, in vec3 rayOri, in vec3 rayDir )`
 
-Example shader amended by shadertoy:
+Example shader amended by Shadertoy (courtesy: [lllBR7 @ Shadertoy](https://shadertoy.com/view/lllBR7)):
 
 ```glsl
 #version 300 es
