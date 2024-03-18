@@ -8,6 +8,7 @@
 #include "SpvProcessor.hpp"
 #include "spv/Tokenizer.hpp"
 #include "utils.hpp"
+#include "vkDisplay.hpp"
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
@@ -199,6 +200,20 @@ PYBIND11_MODULE(vkExecute, m) {
                 return p;
               }
            ));
+
+  py::class_<vkDisplay> vk_display(m, "vkDisplay");
+
+  vk_display.def(py::init<>())
+           .def("setResolution", &vkDisplay::setResolution)
+           .def("setShader", &vkDisplay::setShader)
+           .def("setUiEnabled", &vkDisplay::setUiEnabled)
+           .def("initMainWnd", &vkDisplay::initMainWnd)
+           .def("initVkToy", &vkDisplay::initVkToy)
+           .def("render", &vkDisplay::render)
+           .def("renderUnlocked", [&](vkDisplay &self) {
+             py::gil_scoped_release release_gil;
+             self.render();
+           });
 
   m.def("editDistance", &vkExecute::editDistance);
 

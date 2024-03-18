@@ -67,6 +67,9 @@ set(VKEXECUTE_COMMON_SRCS
   "src/spv/TypeBuilder.cpp"
   "src/spv/Tokenizer.cpp"
   "src/spv/Type.cpp"
+  "src/vkToy/ShaderToy.cpp"
+  "src/vkToy/glslang_resources.cpp"
+  "src/vkToy/vkDisplay.cpp"
 )
 
 add_library(libVkExecute STATIC ${VKEXECUTE_COMMON_SRCS})
