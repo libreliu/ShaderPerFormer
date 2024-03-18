@@ -69,7 +69,7 @@ set(VKEXECUTE_COMMON_SRCS
   "src/spv/Type.cpp"
   "src/vkToy/ShaderToy.cpp"
   "src/vkToy/glslang_resources.cpp"
-  "src/vkToy/vkDisplay.cpp"
+  "src/vkToy/RenderWindow.cpp"
 )
 
 add_library(libVkExecute STATIC ${VKEXECUTE_COMMON_SRCS})

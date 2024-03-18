@@ -431,8 +431,6 @@ public: // v== avk::invokee overrides which will be invoked by the framework ==v
     vertShaderInfo.mShaderType = avk::shader_type::vertex;
     vertShaderInfo.mEntryPoint = "main";
     std::tie(vertShaderInfo.mSpVCode, vertCodeSrc) = toyData->prepareVertexShader();
-    
-    std::cout << "fragment shader code:\n" << fragCodeSrc << std::endl;
 
     if (playMgr.get() != nullptr) {
       playMgr->saveShaders("image", "vertex", vertShaderInfo.mSpVCode.value());
@@ -576,12 +574,6 @@ public: // v== avk::invokee overrides which will be invoked by the framework ==v
     if (avk::input().key_pressed(avk::key_code::escape)) {
       // stop the current composition:
       avk::current_composition()->stop();
-    }
-
-    // On R pressed,recompile shader, only for testing
-    if (avk::input().key_pressed(avk::key_code::r)) {
-      toyData->setShaderSrc("vec3 createRect(vec2 uv, vec2 position, vec2 size, vec3 color) {\n    if(uv.x > position.x && uv.x < position.x + size.x && uv.y > position.y && uv.y < position.y + size.y) {\n        return color;\n    }\n    return vec3(0,0,0);\n}\nvec3 createCircle(vec2 uv, vec2 position, float radius, vec3 color) {\n    float x = uv.x - position.x - pow(uv.x - position.x, 2.);\n    if(x > .0) {\n        if(uv.y < sqrt(x) && uv.y < sqrt(x)) {\n            return color;\n        }\n    }\n    return vec3(0,0,0);\n}   void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\n // Normalized pixel coordinates (from 0 to 1)\n    vec2 uv = fragCoord/iResolution.xy;\n\n    // Time varying pixel color\n    vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));\n\n    float W = 1. / 2.;\n    \n    // Output to screen\n    fragColor = vec4(\n                     createRect(uv, vec2(0,0),           vec2(W,W), col)\n                   + createRect(uv, vec2(1. - W,1. - W), vec2(W,W), abs(cos(col)))\n                   + createRect(uv, vec2(1. - W,0),      vec2(W,W), 0.5 + 0.25 * abs(sin(tan(4. * col))))\n ,1.0);\n}");
-      initImagePass();
     }
 
     // when shader is modified, recompile

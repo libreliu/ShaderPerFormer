@@ -1,6 +1,6 @@
-#include "vkDisplay.hpp"
+#include "RenderWindow.hpp"
 
-vkDisplay::vkDisplay()
+RenderWindow::RenderWindow()
 {
   uiEnabled = true;
   m_vkToy = nullptr;
@@ -8,12 +8,12 @@ vkDisplay::vkDisplay()
   m_queue = nullptr;
 }
 
-vkDisplay::~vkDisplay()
+RenderWindow::~RenderWindow()
 {
   delete m_vkToy;
 }
 
-void vkDisplay::setResolution(int width, int height)
+void RenderWindow::setResolution(int width, int height)
 {
     m_width = width;
     m_height = height;
@@ -23,17 +23,17 @@ void vkDisplay::setResolution(int width, int height)
     }
 }
 
-void vkDisplay::setShader(std::string shader)
+void RenderWindow::setShader(std::string shader)
 {
     m_vkToy->setShader(shader);
 }
 
-void vkDisplay::setUiEnabled(bool enabled)
+void RenderWindow::setUiEnabled(bool enabled)
 {
     uiEnabled = enabled;
 }
 
-void vkDisplay::initMainWnd()
+void RenderWindow::initMainWnd()
 {
   // Create a window and open it
   m_window = avk::context().create_window("vkToy");
@@ -49,7 +49,7 @@ void vkDisplay::initMainWnd()
   m_window->set_present_queue(*m_queue);
 }
 
-void vkDisplay::initVkToy()
+void RenderWindow::initVkToy()
 {
   // Create an instance of our main "invokee" which contains all the functionality:
   m_vkToy = new vkToy(
@@ -60,7 +60,7 @@ void vkDisplay::initVkToy()
   );
 }
 
-void vkDisplay::render() 
+void RenderWindow::render() 
 {
   auto ui = avk::imgui_manager(*m_queue);
   ui.set_use_fence_for_font_upload();

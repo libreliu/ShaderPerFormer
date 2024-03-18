@@ -8,7 +8,7 @@
 #include "SpvProcessor.hpp"
 #include "spv/Tokenizer.hpp"
 #include "utils.hpp"
-#include "vkDisplay.hpp"
+#include "RenderWindow.hpp"
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
@@ -201,16 +201,16 @@ PYBIND11_MODULE(vkExecute, m) {
               }
            ));
 
-  py::class_<vkDisplay> vk_display(m, "vkDisplay");
+  py::class_<RenderWindow> renderWindow(m, "RenderWindow");
 
-  vk_display.def(py::init<>())
-           .def("setResolution", &vkDisplay::setResolution)
-           .def("setShader", &vkDisplay::setShader)
-           .def("setUiEnabled", &vkDisplay::setUiEnabled)
-           .def("initMainWnd", &vkDisplay::initMainWnd)
-           .def("initVkToy", &vkDisplay::initVkToy)
-           .def("render", &vkDisplay::render)
-           .def("renderUnlocked", [&](vkDisplay &self) {
+  renderWindow.def(py::init<>())
+           .def("setResolution", &RenderWindow::setResolution)
+           .def("setShader", &RenderWindow::setShader)
+           .def("setUiEnabled", &RenderWindow::setUiEnabled)
+           .def("initMainWnd", &RenderWindow::initMainWnd)
+           .def("initVkToy", &RenderWindow::initVkToy)
+           .def("render", &RenderWindow::render)
+           .def("renderUnlocked", [&](RenderWindow &self) {
              py::gil_scoped_release release_gil;
              self.render();
            });

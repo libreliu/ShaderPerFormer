@@ -1,7 +1,7 @@
 import multiprocessing
 import threading
 import vkExecute
-from vkExecute import vkDisplay
+from vkExecute import RenderWindow
 import numpy as np
 import gradio as gr
 import predictor
@@ -166,8 +166,8 @@ def setShaderSrcFn():
         width = displayInQueue.get()
         height = displayInQueue.get()
         shaderSrc = displayInQueue.get()
-        display.setResolution(width, height)
-        display.setShader(shaderSrc)
+        renderWindow.setResolution(width, height)
+        renderWindow.setShader(shaderSrc)
 
 def webMain(displayInQueue, frameInQueue, frameOutQueue, predictInQueue, predictOutQueue):
     styleCSS = '''
@@ -223,7 +223,7 @@ def loadModels():
 
 
 if __name__ == "__main__":
-    display = vkDisplay()
+    renderWindow = RenderWindow()
     dataProcessor = predictor.DataProcessor(fragShaderSrcHead=FRAG_SHADER_SRC_HEAD)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = dataProcessor.tokenizer
@@ -236,11 +236,11 @@ if __name__ == "__main__":
     predictOutQueue = multiprocessing.Queue()
 
     # init the display
-    display.setResolution(1024, 768)
-    display.setUiEnabled(True)
-    display.initMainWnd()
-    display.initVkToy()
-    display.setShader(
+    renderWindow.setResolution(1024, 768)
+    renderWindow.setUiEnabled(True)
+    renderWindow.initMainWnd()
+    renderWindow.initVkToy()
+    renderWindow.setShader(
         "void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\n fragColor = vec4(0.0,1.0,1.0,1.0);\n}")
     
     # this needs to be a thread, otherwise the display can not be passed
@@ -261,6 +261,6 @@ if __name__ == "__main__":
     grThread.start()
 
     # display must be in the main thread
-    display.renderUnlocked()
+    renderWindow.renderUnlocked()
     # while True:
     #     pass

@@ -11,15 +11,14 @@
 #include "avk/commands.hpp"
 #include "avk/memory_usage.hpp"
 #include "avk/shader_type.hpp"
-#include "util.hpp"
 #include "vkToy.hpp"
 #include <thread>
 
-class vkDisplay
+class RenderWindow
 {
 public:
-    vkDisplay();
-    ~vkDisplay();
+    RenderWindow();
+    ~RenderWindow();
     void setResolution(int width, int height);
     void setShader(std::string shader);
     void setUiEnabled(bool enabled);
