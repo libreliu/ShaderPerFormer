@@ -4,6 +4,8 @@ Repository for our [ACM SIGGRAPH i3D'2024](https://i3dsymposium.org/2024/) paper
 
 ![Pipeline Overview](image/PipelineOverview.png)
 
+Paper: [Author's version](./ShaderPerFormer.pdf)
+
 <!--
 Consider citing our work with the following BibTeX command:
 ```
