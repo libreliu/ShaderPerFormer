@@ -13,7 +13,11 @@ TODO
 ```
 -->
 
-> Some code in this repository requires tidy-up. Also, some intermediate files are not given due to Google Drive capacity issues. This is a TODO for now.
+> TODO:
+> - [ ] Upload model & intermediate files
+> - [ ] vkPredict notebook clean-up
+> - [ ] More instructions on vkToy
+> - [ ] Code tidy-up
 
 ## Contents
 
