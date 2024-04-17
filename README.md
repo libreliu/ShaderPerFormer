@@ -13,6 +13,8 @@ TODO
 ```
 -->
 
+> Some code in this repository requires tidy-up. Also, some intermediate files are not given due to Google Drive capacity issues. This is a TODO for now.
+
 ## Contents
 
 ### Codes
