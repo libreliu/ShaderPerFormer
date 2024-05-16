@@ -46,6 +46,12 @@ keywords = {GPU, performance modeling, shader performance prediction}
 > - [ ] More instructions on vkToy
 > - [ ] Code tidy-up
 
+> TODO:
+> - [ ] Upload model & intermediate files
+> - [ ] vkPredict notebook clean-up
+> - [ ] More instructions on vkToy
+> - [ ] Code tidy-up
+
 ## Contents
 
 ### Codes
