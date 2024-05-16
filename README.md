@@ -4,14 +4,47 @@ Repository for our [ACM SIGGRAPH i3D'2024](https://i3dsymposium.org/2024/) paper
 
 ![Pipeline Overview](image/PipelineOverview.png)
 
-Paper: [Author's version](./ShaderPerFormer.pdf)
+Authors:
+- Zitan Liu ([@libreliu](https://github.com/libreliu))
+- Yikai Huang ([@Giluir](https://github.com/Giluir))
+- Ligang Liu ([Homepage](http://staff.ustc.edu.cn/~lgliu)).
 
-<!--
-Consider citing our work with the following BibTeX command:
+Useful links:
+- [Author's version](./ShaderPerFormer.pdf)
+- [Proc. ACMCGIT version](https://doi.org/10.1145/3651295)
+- [Short video clip on pipeline of our work](./I3D-Video-HiRes.mp4)
+
+<details>
+<summary>BibTeX command for citation</summary>
+
+```bibtex
+@article{10.1145/3651295,
+author = {Liu, Zitan and Huang, Yikai and Liu, Ligang},
+title = {ShaderPerFormer: Platform-independent Context-aware Shader Performance Predictor},
+year = {2024},
+issue_date = {May 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {7},
+number = {1},
+url = {https://doi.org/10.1145/3651295},
+doi = {10.1145/3651295},
+abstract = {The ability to model and predict the execution time of GPU computations is crucial for real-time graphics application development and optimization. While there are many existing methodologies for graphics programmers to provide such estimates, those methods are often vendor-dependent, require the platforms to be tested, or fail to capture the contextual influences among shader instructions. To address this challenge, we propose ShaderPerFormer, a platform-independent, context-aware deep-learning approach to model GPU performance and provide end-to-end performance predictions on a per-shader basis. To provide more accurate predictions, our method contains a separate stage to gather platform-independent shader program trace information. We also provide a dataset consisting of a total of 54,667 fragment shader performance samples on 5 different platforms. Compared to the PILR and SH baseline methods, our approach reduces the average MAPE across five platforms by 8.26\% and 25.25\%, respectively.},
+journal = {Proc. ACM Comput. Graph. Interact. Tech.},
+month = {may},
+articleno = {2},
+numpages = {17},
+keywords = {GPU, performance modeling, shader performance prediction}
+}
 ```
-TODO
-```
--->
+
+</details>
+
+> TODO:
+> - [ ] Upload model & intermediate files
+> - [ ] vkPredict notebook clean-up
+> - [ ] More instructions on vkToy
+> - [ ] Code tidy-up
 
 ## Contents
 
