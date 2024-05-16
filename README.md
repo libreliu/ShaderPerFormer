@@ -14,6 +14,8 @@ Useful links:
 - [Proc. ACMCGIT version](https://doi.org/10.1145/3651295)
 - [Short video clip on pipeline of our work](./I3D-Video-HiRes.mp4)
 
+https://github.com/libreliu/ShaderPerFormer/assets/5582384/71a1562f-56c0-4ef2-ac2f-688ee225a7b7
+
 <details>
 <summary>BibTeX command for citation</summary>
 
@@ -37,7 +39,6 @@ numpages = {17},
 keywords = {GPU, performance modeling, shader performance prediction}
 }
 ```
-
 </details>
 
 > TODO:
